@@ -1,0 +1,66 @@
+# =========================
+# Dart / Flutter
+# =========================
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/build/
+**/ios/Flutter/.last_build_id
+**/android/.gradle/
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/android/local.properties
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+*.g.dart
+*.freezed.dart
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# =========================
+# Visual Studio / ASP.NET / .NET
+# =========================
+**/[Bb]in/
+**/[Oo]bj/
+**/.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+**/wwwroot/lib/
+*.pdb
+*.cache
+**/appsettings.Development.json
+**/appsettings.Local.json
+**/node_modules/
+
+# =========================
+# Supabase / secrets — never commit these
+# =========================
+.env
+.env.*
+**/supabase/.temp/
+**/secrets.json
+**/*apikey*
+**/*service_role*
+
+# =========================
+# OS / editor files
+# =========================
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# =========================
+# Logs
+# =========================
+*.log
