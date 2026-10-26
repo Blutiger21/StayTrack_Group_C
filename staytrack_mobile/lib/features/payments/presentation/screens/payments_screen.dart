@@ -95,7 +95,7 @@ class PaymentsScreen extends ConsumerWidget {
                   child: _SkeletonCard(height: 80),
                 ),
               ),
-              error: (e, _) => SliverFillRemaining(
+              error: (e, _) => const SliverFillRemaining(
                 child: _EmptyState(
                   icon: Icons.error_outline_rounded,
                   message: 'Could not load your payment history.\nPlease try again.',
