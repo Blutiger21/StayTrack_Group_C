@@ -1,17 +1,51 @@
-# staytrack_mobile
+# StayTrack Mobile App
 
-A new Flutter project.
+The student-facing mobile application for the StayTrack student accommodation management system, developed with **Flutter** and **Supabase**.
+
+## Features
+
+- **Authentication**: OTP-based student email login via Supabase Auth.
+- **Home Dashboard**: Quick overview of student tenancy, lease details, assigned room, and latest announcements.
+- **Payments (`feature/student-payments`)**:
+  - View rent payment history with real-time status chips (`Pending`, `Verified`, `Rejected`).
+  - Outstanding balance calculation based on tenancy rental amount and unpaid periods.
+  - Proof of payment upload with document picker (PDF, PNG, JPG).
+  - Secure storage upload to Supabase `proof-of-payment` bucket.
+- **Maintenance**: Submit repair requests with photo attachments and track progress.
+- **Announcements**: Residence-wide broadcasts from accommodation management.
+
+## Directory Structure
+
+```
+lib/
+├── core/
+│   ├── constants/       # App-wide constants (Supabase credentials, bucket names)
+│   ├── models/          # Data models (Payment, Tenant, Room, MaintenanceRequest, etc.)
+│   ├── router/          # GoRouter configuration & route guards
+│   ├── services/        # Supabase client service layer
+│   └── theme/           # Design system palette, typography, and component themes
+├── features/
+│   ├── announcements/   # Announcements feed & providers
+│   ├── auth/            # Sign-in and OTP verification screens
+│   ├── home/            # Main shell, dashboard, and navigation bar
+│   ├── maintenance/     # Maintenance ticket submission and tracking
+│   └── payments/        # Payments overview, history list, and proof upload screen
+└── main.dart            # Application entrypoint with Riverpod ProviderScope
+```
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) (Dart 3.x)
+- Android Studio / Xcode for device simulation
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+### Installation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+# Get dependencies
+flutter pub get
+
+# Run on an emulator or connected device
+flutter run
+```
