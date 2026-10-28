@@ -114,7 +114,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       return 'Please enter your email address.';
                     }
                     final emailRegex =
-                    RegExp(r'^[\w\.\-]+@[\w\-]+\.[a-zA-Z]{2,}$');
+                        RegExp(r'^[\w\.\-]+@[\w\-]+\.[a-zA-Z]{2,}$');
                     if (!emailRegex.hasMatch(v.trim())) {
                       return 'Please enter a valid email address.';
                     }
@@ -138,13 +138,13 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   onPressed: isLoading ? null : _sendOtp,
                   child: isLoading
                       ? const SizedBox(
-                    height: 22,
-                    width: 22,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 2.5,
-                    ),
-                  )
+                          height: 22,
+                          width: 22,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2.5,
+                          ),
+                        )
                       : const Text('Send Sign-In Code'),
                 ).animate().fadeIn(delay: 400.ms, duration: 600.ms),
 
@@ -167,8 +167,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         child: Text(
                           'We\'ll email you a 6-digit code. No password required!',
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: AppColors.primary,
-                          ),
+                                color: AppColors.primary,
+                              ),
                         ),
                       ),
                     ],

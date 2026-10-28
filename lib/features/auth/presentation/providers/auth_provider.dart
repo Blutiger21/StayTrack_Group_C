@@ -23,9 +23,9 @@ class OtpState {
   const OtpState({this.step = OtpStep.idle, this.errorMessage});
 
   OtpState copyWith({OtpStep? step, String? errorMessage}) => OtpState(
-    step: step ?? this.step,
-    errorMessage: errorMessage,
-  );
+        step: step ?? this.step,
+        errorMessage: errorMessage,
+      );
 }
 
 class OtpNotifier extends StateNotifier<OtpState> {
@@ -96,6 +96,6 @@ class OtpNotifier extends StateNotifier<OtpState> {
 }
 
 final otpNotifierProvider =
-StateNotifierProvider<OtpNotifier, OtpState>((ref) {
+    StateNotifierProvider<OtpNotifier, OtpState>((ref) {
   return OtpNotifier(ref.watch(supabaseServiceProvider));
 });

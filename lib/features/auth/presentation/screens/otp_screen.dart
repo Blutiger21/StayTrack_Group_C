@@ -17,7 +17,7 @@ class OtpScreen extends ConsumerStatefulWidget {
 class _OtpScreenState extends ConsumerState<OtpScreen> {
   // 6 controllers for each digit
   final List<TextEditingController> _controllers =
-  List.generate(6, (_) => TextEditingController());
+      List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
 
   int _resendCooldown = 60;
@@ -212,13 +212,13 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                 onPressed: isLoading ? null : _verify,
                 child: isLoading
                     ? const SizedBox(
-                  height: 22,
-                  width: 22,
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 2.5,
-                  ),
-                )
+                        height: 22,
+                        width: 22,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2.5,
+                        ),
+                      )
                     : const Text('Verify Code'),
               ).animate().fadeIn(delay: 300.ms),
 
@@ -233,11 +233,11 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                         ? 'Resend code in ${_resendCooldown}s'
                         : 'Resend code',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: _resendCooldown > 0
-                          ? AppColors.textMuted
-                          : AppColors.primary,
-                      fontWeight: FontWeight.w600,
-                    ),
+                          color: _resendCooldown > 0
+                              ? AppColors.textMuted
+                              : AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ),
               ).animate().fadeIn(delay: 350.ms),
@@ -261,8 +261,8 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                       child: Text(
                         'Check your spam/junk folder if the email hasn\'t arrived within a minute.',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.accent,
-                        ),
+                              color: AppColors.accent,
+                            ),
                       ),
                     ),
                   ],
@@ -313,9 +313,9 @@ class _OtpBox extends StatelessWidget {
           keyboardType: TextInputType.number,
           maxLength: 1,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w700,
-            fontSize: 22,
-          ),
+                fontWeight: FontWeight.w700,
+                fontSize: 22,
+              ),
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           decoration: InputDecoration(
             counterText: '',
