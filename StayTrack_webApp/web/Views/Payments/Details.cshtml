@@ -1,0 +1,190 @@
+@model StayTrack.Models.ViewModels.PaymentDetailViewModel
+@{
+    ViewData["Title"] = $"Payment #{Model.Payment.PaymentId} Details";
+    var payment = Model.Payment;
+}
+
+<div class="row justify-content-center py-3">
+    <div class="col-lg-11">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <a asp-action="Index" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-1 mb-1">
+                    <i class="bi bi-arrow-left"></i> Back to Payments
+                </a>
+                <h2 class="fw-bold mb-0 text-dark">Payment Verification Details</h2>
+            </div>
+            <div>
+                @if (payment.Status == "approved")
+                {
+                    <span class="badge-status badge-approved fs-6 px-3 py-2">
+                        <i class="bi bi-check2-circle me-1"></i> Approved
+                    </span>
+                }
+                else if (payment.Status == "rejected")
+                {
+                    <span class="badge-status badge-rejected fs-6 px-3 py-2">
+                        <i class="bi bi-x-circle me-1"></i> Rejected
+                    </span>
+                }
+                else
+                {
+                    <span class="badge-status badge-pending fs-6 px-3 py-2">
+                        <i class="bi bi-hourglass-split me-1"></i> Pending Verification
+                    </span>
+                }
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Payment Information & Approval Actions -->
+            <div class="col-lg-5">
+                <!-- Tenant Summary Card -->
+                <div class="card card-custom p-4 mb-3">
+                    <h6 class="text-secondary small fw-semibold text-uppercase mb-3">Tenant Information</h6>
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="bg-primary-subtle text-primary rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
+                            <i class="bi bi-person-fill fs-3"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">@(payment.Tenant?.Profile?.FullName ?? "Tenant #" + payment.TenantId)</h5>
+                            <div class="text-muted small">
+                                Student #: <strong class="text-dark font-monospace">@(payment.Tenant?.StudentNumber ?? "-")</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top pt-2 small text-muted">
+                        <div><i class="bi bi-building me-1"></i> @(payment.Tenant?.Room?.Property?.Name ?? "Property")</div>
+                        <div><i class="bi bi-door-closed me-1"></i> Room <strong>@(payment.Tenant?.Room?.RoomNumber ?? "-")</strong> (@(payment.Tenant?.Room?.RoomType ?? "-"))</div>
+                        @if (!string.IsNullOrWhiteSpace(payment.Tenant?.Profile?.Email))
+                        {
+                            <div><i class="bi bi-envelope me-1"></i> @payment.Tenant.Profile.Email</div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Payment Details Card -->
+                <div class="card card-custom p-4 mb-3">
+                    <h6 class="text-secondary small fw-semibold text-uppercase mb-3">Transaction Details</h6>
+                    <div class="mb-3">
+                        <div class="text-muted small">Amount Submitted</div>
+                        <h2 class="fw-bold text-primary mb-0">R @payment.Amount.ToString("N2")</h2>
+                    </div>
+
+                    <div class="row g-2 mb-2 small">
+                        <div class="col-6">
+                            <span class="text-muted d-block">Month Paid For:</span>
+                            <strong class="text-dark">@payment.PeriodMonth.ToString("MMMM yyyy")</strong>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-muted d-block">Payment Date:</span>
+                            <strong class="text-dark">@payment.PaymentDate.ToString("MMM dd, yyyy")</strong>
+                        </div>
+                    </div>
+
+                    <div class="small mb-3">
+                        <span class="text-muted d-block">Payment Reference:</span>
+                        <span class="badge bg-light text-dark border font-monospace fs-6">
+                            @payment.Reference
+                        </span>
+                    </div>
+
+                    @if (payment.VerifiedAt.HasValue)
+                    {
+                        <div class="p-3 bg-light rounded-3 small border">
+                            <div class="text-secondary fw-semibold">Verification Audit</div>
+                            <div>Verified By: <strong>@(payment.VerifiedByProfile?.FullName ?? payment.VerifiedBy?.ToString() ?? "Manager")</strong></div>
+                            <div>Verified At: @payment.VerifiedAt.Value.ToString("yyyy-MM-dd HH:mm UTC")</div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Approval / Rejection Actions -->
+                <div class="card card-custom p-4">
+                    <h6 class="text-secondary small fw-semibold text-uppercase mb-3">Verification Decision</h6>
+
+                    <div class="d-flex gap-2">
+                        <form asp-action="Approve" asp-route-id="@payment.PaymentId" method="post" class="flex-grow-1">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-success w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                                    onclick="return confirm('Approve this payment of R @payment.Amount.ToString("N2")?');">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Approve Payment</span>
+                            </button>
+                        </form>
+
+                        <form asp-action="Reject" asp-route-id="@payment.PaymentId" method="post" class="flex-grow-1">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-danger w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+                                    onclick="return confirm('Reject this payment submission?');">
+                                <i class="bi bi-x-circle-fill"></i>
+                                <span>Reject Payment</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Proof of Payment Document Viewer -->
+            <div class="col-lg-7">
+                <div class="card card-custom h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="text-secondary small fw-semibold text-uppercase mb-0">Proof of Payment</h6>
+                        @if (Model.HasProof)
+                        {
+                            <a href="@Model.SignedProofUrl" target="_blank" rel="noopener noreferrer" 
+                               class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-1">
+                                <i class="bi bi-box-arrow-up-right"></i> Open Full View
+                            </a>
+                        }
+                    </div>
+
+                    @if (!Model.HasProof)
+                    {
+                        <div class="empty-state my-auto">
+                            <div class="empty-state-icon">
+                                <i class="bi bi-file-earmark-x"></i>
+                            </div>
+                            <h5 class="fw-bold">No Document Uploaded</h5>
+                            <p class="text-muted small mb-0">
+                                This payment was either recorded manually by management or submitted without an attached receipt file.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="border rounded-3 p-2 bg-light text-center h-100 d-flex flex-column justify-content-center overflow-auto">
+                            @if (Model.IsImage)
+                            {
+                                <img src="@Model.SignedProofUrl" alt="Proof of Payment" 
+                                     class="img-fluid rounded shadow-sm mx-auto" 
+                                     style="max-height: 650px; object-fit: contain;" />
+                            }
+                            else if (Model.IsPdf)
+                            {
+                                <div class="p-4 text-center">
+                                    <i class="bi bi-file-earmark-pdf-fill text-danger" style="font-size: 5rem;"></i>
+                                    <h5 class="fw-bold mt-2">PDF Document Attached</h5>
+                                    <p class="text-muted small mb-3">Click below to open and inspect the PDF proof of payment in a new tab.</p>
+                                    <a href="@Model.SignedProofUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                                        <i class="bi bi-file-earmark-pdf me-1"></i> View PDF Document
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="p-4 text-center">
+                                    <i class="bi bi-file-earmark-check-fill text-primary" style="font-size: 5rem;"></i>
+                                    <h5 class="fw-bold mt-2">Receipt Document</h5>
+                                    <p class="text-muted small mb-3">Click below to view or download the attached payment receipt.</p>
+                                    <a href="@Model.SignedProofUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                                        <i class="bi bi-download me-1"></i> Download Proof File
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
