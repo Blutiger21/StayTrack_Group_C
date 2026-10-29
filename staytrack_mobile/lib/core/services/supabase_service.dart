@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mime/mime.dart';
 import 'package:path/path.dart' as p;
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:stay_track/core/constants/app_constants.dart';
-import 'package:stay_track/core/models/announcement.dart';
-import 'package:stay_track/core/models/maintenance_request.dart';
-import 'package:stay_track/core/models/payment.dart';
-import 'package:stay_track/core/models/tenant.dart';
-import 'package:stay_track/core/models/user_profile.dart';
+import 'package:staytrack_mobile/core/constants/app_constants.dart';
+import 'package:staytrack_mobile/core/models/announcement.dart';
+import 'package:staytrack_mobile/core/models/maintenance_request.dart';
+import 'package:staytrack_mobile/core/models/payment.dart';
+import 'package:staytrack_mobile/core/models/tenant.dart';
+import 'package:staytrack_mobile/core/models/user_profile.dart';
 
 // ── Provider ──────────────────────────────────────────────────────────────────
 final supabaseServiceProvider = Provider<SupabaseService>((ref) {

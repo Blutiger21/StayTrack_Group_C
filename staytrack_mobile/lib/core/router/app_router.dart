@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stay_track/features/auth/presentation/providers/auth_provider.dart';
-import 'package:stay_track/features/auth/presentation/screens/sign_in_screen.dart';
-import 'package:stay_track/features/auth/presentation/screens/otp_screen.dart';
-import 'package:stay_track/features/home/presentation/screens/home_screen.dart';
-import 'package:stay_track/features/home/presentation/screens/main_shell.dart';
-import 'package:stay_track/features/payments/presentation/screens/payments_screen.dart';
-import 'package:stay_track/features/payments/presentation/screens/upload_proof_screen.dart';
-import 'package:stay_track/features/maintenance/presentation/screens/maintenance_screen.dart';
-import 'package:stay_track/features/maintenance/presentation/screens/submit_request_screen.dart';
-import 'package:stay_track/features/announcements/presentation/screens/announcements_screen.dart';
+import 'package:staytrack_mobile/features/auth/presentation/providers/auth_provider.dart';
+import 'package:staytrack_mobile/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:staytrack_mobile/features/auth/presentation/screens/otp_screen.dart';
+import 'package:staytrack_mobile/features/home/presentation/screens/home_screen.dart';
+import 'package:staytrack_mobile/features/home/presentation/screens/main_shell.dart';
+import 'package:staytrack_mobile/features/payments/presentation/screens/payments_screen.dart';
+import 'package:staytrack_mobile/features/payments/presentation/screens/upload_proof_screen.dart';
+import 'package:staytrack_mobile/features/maintenance/presentation/screens/maintenance_screen.dart';
+import 'package:staytrack_mobile/features/maintenance/presentation/screens/submit_request_screen.dart';
+import 'package:staytrack_mobile/features/announcements/presentation/screens/announcements_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();

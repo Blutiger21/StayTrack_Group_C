@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stay_track/core/theme/app_theme.dart';
+import 'package:staytrack_mobile/core/theme/app_theme.dart';
 
 class MainShell extends StatelessWidget {
   final Widget child;

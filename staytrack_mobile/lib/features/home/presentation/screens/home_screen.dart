@@ -3,16 +3,16 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:stay_track/core/constants/app_constants.dart';
-import 'package:stay_track/core/models/tenant.dart';
-import 'package:stay_track/core/models/user_profile.dart';
-import 'package:stay_track/core/theme/app_theme.dart';
-import 'package:stay_track/features/auth/presentation/providers/auth_provider.dart';
-import 'package:stay_track/core/models/tenant.dart';
-import 'package:stay_track/core/models/user_profile.dart';
-import 'package:stay_track/core/theme/app_theme.dart';
-import 'package:stay_track/features/home/presentation/providers/home_provider.dart';
-import 'package:stay_track/core/services/supabase_service.dart';
+import 'package:staytrack_mobile/core/constants/app_constants.dart';
+import 'package:staytrack_mobile/core/models/tenant.dart';
+import 'package:staytrack_mobile/core/models/user_profile.dart';
+import 'package:staytrack_mobile/core/theme/app_theme.dart';
+import 'package:staytrack_mobile/features/auth/presentation/providers/auth_provider.dart';
+import 'package:staytrack_mobile/core/models/tenant.dart';
+import 'package:staytrack_mobile/core/models/user_profile.dart';
+import 'package:staytrack_mobile/core/theme/app_theme.dart';
+import 'package:staytrack_mobile/features/home/presentation/providers/home_provider.dart';
+import 'package:staytrack_mobile/core/services/supabase_service.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});

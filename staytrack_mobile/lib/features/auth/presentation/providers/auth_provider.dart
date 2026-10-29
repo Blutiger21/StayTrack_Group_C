@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:stay_track/core/services/supabase_service.dart';
+import 'package:staytrack_mobile/core/services/supabase_service.dart';
 
 // ── Auth state stream ─────────────────────────────────────────────────────────
 final authStateProvider = StreamProvider<AuthState>((ref) {

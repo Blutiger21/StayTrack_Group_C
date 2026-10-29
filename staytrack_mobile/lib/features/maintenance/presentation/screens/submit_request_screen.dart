@@ -4,10 +4,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:stay_track/core/constants/app_constants.dart';
-import 'package:stay_track/core/theme/app_theme.dart';
-import 'package:stay_track/features/home/presentation/providers/home_provider.dart';
-import 'package:stay_track/features/maintenance/presentation/providers/maintenance_provider.dart';
+import 'package:staytrack_mobile/core/constants/app_constants.dart';
+import 'package:staytrack_mobile/core/theme/app_theme.dart';
+import 'package:staytrack_mobile/features/home/presentation/providers/home_provider.dart';
+import 'package:staytrack_mobile/features/maintenance/presentation/providers/maintenance_provider.dart';
 
 class SubmitRequestScreen extends ConsumerStatefulWidget {
   const SubmitRequestScreen({super.key});

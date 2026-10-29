@@ -1,4 +1,4 @@
-import 'package:stay_track/core/constants/app_constants.dart';
+import 'package:staytrack_mobile/core/constants/app_constants.dart';
 
 class Payment {
   final int paymentId;

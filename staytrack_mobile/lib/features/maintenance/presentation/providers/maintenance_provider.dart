@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:stay_track/core/models/maintenance_request.dart';
-import 'package:stay_track/core/services/supabase_service.dart';
-import 'package:stay_track/features/home/presentation/providers/home_provider.dart';
+import 'package:staytrack_mobile/core/models/maintenance_request.dart';
+import 'package:staytrack_mobile/core/services/supabase_service.dart';
+import 'package:staytrack_mobile/features/home/presentation/providers/home_provider.dart';
 
 // ── This tenant's requests ────────────────────────────────────────────────────
 final myMaintenanceRequestsProvider =

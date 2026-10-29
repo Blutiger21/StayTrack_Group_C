@@ -1,4 +1,4 @@
-import 'package:stay_track/core/models/room.dart';
+import 'package:staytrack_mobile/core/models/room.dart';
 
 class Tenant {
   final int tenantId;

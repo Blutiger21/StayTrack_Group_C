@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:stay_track/core/models/announcement.dart';
-import 'package:stay_track/core/theme/app_theme.dart';
-import 'package:stay_track/features/announcements/presentation/providers/announcements_provider.dart';
+import 'package:staytrack_mobile/core/models/announcement.dart';
+import 'package:staytrack_mobile/core/theme/app_theme.dart';
+import 'package:staytrack_mobile/features/announcements/presentation/providers/announcements_provider.dart';
 
 class AnnouncementsScreen extends ConsumerWidget {
   const AnnouncementsScreen({super.key});

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stay_track/core/theme/app_theme.dart';
-import 'package:stay_track/features/auth/presentation/providers/auth_provider.dart';
+import 'package:staytrack_mobile/core/theme/app_theme.dart';
+import 'package:staytrack_mobile/features/auth/presentation/providers/auth_provider.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});

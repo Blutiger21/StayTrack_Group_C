@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stay_track/core/models/payment.dart';
-import 'package:stay_track/core/theme/app_theme.dart';
+import 'package:staytrack_mobile/core/models/payment.dart';
+import 'package:staytrack_mobile/core/theme/app_theme.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 void main() {
   testWidgets('Payment card renders basic status', (WidgetTester tester) async {

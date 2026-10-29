@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stay_track/core/models/announcement.dart';
-import 'package:stay_track/core/models/tenant.dart';
-import 'package:stay_track/core/models/user_profile.dart';
-import 'package:stay_track/core/services/supabase_service.dart';
-import 'package:stay_track/features/auth/presentation/providers/auth_provider.dart';
+import 'package:staytrack_mobile/core/models/announcement.dart';
+import 'package:staytrack_mobile/core/models/tenant.dart';
+import 'package:staytrack_mobile/core/models/user_profile.dart';
+import 'package:staytrack_mobile/core/services/supabase_service.dart';
+import 'package:staytrack_mobile/features/auth/presentation/providers/auth_provider.dart';
 
 // ── User Profile ──────────────────────────────────────────────────────────────
 final profileProvider = FutureProvider<UserProfile?>((ref) async {

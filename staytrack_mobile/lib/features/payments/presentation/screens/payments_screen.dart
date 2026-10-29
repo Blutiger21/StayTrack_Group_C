@@ -3,11 +3,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:stay_track/core/constants/app_constants.dart';
-import 'package:stay_track/core/models/payment.dart';
-import 'package:stay_track/core/theme/app_theme.dart';
-import 'package:stay_track/features/home/presentation/providers/home_provider.dart';
-import 'package:stay_track/features/payments/presentation/providers/payments_provider.dart';
+import 'package:staytrack_mobile/core/constants/app_constants.dart';
+import 'package:staytrack_mobile/core/models/payment.dart';
+import 'package:staytrack_mobile/core/theme/app_theme.dart';
+import 'package:staytrack_mobile/features/home/presentation/providers/home_provider.dart';
+import 'package:staytrack_mobile/features/payments/presentation/providers/payments_provider.dart';
 
 class PaymentsScreen extends ConsumerWidget {
   const PaymentsScreen({super.key});
@@ -95,7 +95,7 @@ class PaymentsScreen extends ConsumerWidget {
                   child: _SkeletonCard(height: 80),
                 ),
               ),
-              error: (e, _) => const SliverFillRemaining(
+              error: (e, _) => SliverFillRemaining(
                 child: _EmptyState(
                   icon: Icons.error_outline_rounded,
                   message: 'Could not load your payment history.\nPlease try again.',

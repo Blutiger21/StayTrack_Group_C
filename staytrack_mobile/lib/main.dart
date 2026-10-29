@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:stay_track/core/constants/app_constants.dart';
-import 'package:stay_track/core/router/app_router.dart';
-import 'package:stay_track/core/theme/app_theme.dart';
+import 'package:staytrack_mobile/core/constants/app_constants.dart';
+import 'package:staytrack_mobile/core/router/app_router.dart';
+import 'package:staytrack_mobile/core/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
