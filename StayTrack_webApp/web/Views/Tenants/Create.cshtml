@@ -1,0 +1,157 @@
+@model StayTrack.Models.ViewModels.TenantFormViewModel
+@{
+    ViewData["Title"] = "Add Student Tenant";
+}
+
+<div class="row justify-content-center py-3">
+    <div class="col-lg-8">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <a asp-action="Index" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-1 mb-1">
+                    <i class="bi bi-arrow-left"></i> Back to Tenants
+                </a>
+                <h2 class="fw-bold mb-0 text-dark">Register New Student Tenant</h2>
+            </div>
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill fs-6">
+                <i class="bi bi-person-plus-fill me-1"></i> New Lease
+            </span>
+        </div>
+
+        @if (!Model.AvailableStudents.Any())
+        {
+            <div class="alert alert-warning border-warning-subtle shadow-sm p-4 mb-4" role="alert">
+                <div class="d-flex align-items-start gap-3">
+                    <i class="bi bi-exclamation-triangle-fill text-warning fs-3 flex-shrink-0"></i>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-1">No Unassigned Student Profiles Found</h5>
+                        <p class="text-secondary mb-2">
+                            To register a tenant, an existing student account with the <strong>student role</strong> and no active lease must exist in the system.
+                        </p>
+                        <p class="small text-muted mb-0">
+                            Students typically register their accounts via the <strong>StayTrack Flutter Mobile App</strong>. You can also insert a test student profile into the Supabase <code>profiles</code> table with <code>role_id = 1 (student)</code>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (!Model.AvailableRooms.Any())
+        {
+            <div class="alert alert-info border-info-subtle shadow-sm p-4 mb-4" role="alert">
+                <div class="d-flex align-items-start gap-3">
+                    <i class="bi bi-info-circle-fill text-info fs-3 flex-shrink-0"></i>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-1">No Rooms Available</h5>
+                        <p class="text-secondary mb-2">
+                            You must create at least one property and room before assigning a tenant lease.
+                        </p>
+                        <a asp-action="Index" asp-route-tab="rooms" class="btn btn-outline-info btn-sm">
+                            <i class="bi bi-buildings-fill me-1"></i> Go to Properties &amp; Rooms to add one
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="card card-custom p-4 shadow-sm">
+            <div class="card-body p-0">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small" role="alert"></div>
+
+                <form asp-action="Create" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+
+                    <!-- Student Profile Selection -->
+                    <div class="mb-3">
+                        <label asp-for="UserId" class="form-label fw-semibold text-secondary small"></label>
+                        <select asp-for="UserId" class="form-select @(ViewData.ModelState["UserId"]?.Errors.Count > 0 ? "is-invalid" : "")" 
+                                disabled="@(!Model.AvailableStudents.Any())">
+                            <option value="">-- Choose Existing Student Profile --</option>
+                            @foreach (var student in Model.AvailableStudents)
+                            {
+                                <option value="@student.Id">@student.FullName (@student.Email)</option>
+                            }
+                        </select>
+                        <span asp-validation-for="UserId" class="text-danger small mt-1 d-block"></span>
+                        <div class="form-text small">Selects an existing student profile from the shared Supabase project.</div>
+                    </div>
+
+                    <!-- Room Selection -->
+                    <div class="mb-3">
+                        <label asp-for="RoomId" class="form-label fw-semibold text-secondary small"></label>
+                        <select asp-for="RoomId" class="form-select @(ViewData.ModelState["RoomId"]?.Errors.Count > 0 ? "is-invalid" : "")"
+                                disabled="@(!Model.AvailableRooms.Any())">
+                            <option value="">-- Choose Room --</option>
+                            @foreach (var room in Model.AvailableRooms)
+                            {
+                                <option value="@room.RoomId">
+                                    @(room.Property?.Name ?? "Property") - Room @room.RoomNumber (@room.RoomType) [@room.Status.ToUpper()]
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="RoomId" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <!-- Student Number -->
+                        <div class="col-md-6">
+                            <label asp-for="StudentNumber" class="form-label fw-semibold text-secondary small"></label>
+                            <input asp-for="StudentNumber" class="form-control" placeholder="e.g. STD2026101" />
+                            <span asp-validation-for="StudentNumber" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Payment Reference -->
+                        <div class="col-md-6">
+                            <label asp-for="PaymentReference" class="form-label fw-semibold text-secondary small"></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light font-monospace small">#</span>
+                                <input asp-for="PaymentReference" class="form-control font-monospace" placeholder="e.g. STAY-1001" />
+                            </div>
+                            <span asp-validation-for="PaymentReference" class="text-danger small mt-1 d-block"></span>
+                            <div class="form-text small">Unique reference used for matching student payments.</div>
+                        </div>
+                    </div>
+
+                    <!-- Rental Amount -->
+                    <div class="mb-3">
+                        <label asp-for="RentalAmount" class="form-label fw-semibold text-secondary small"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">R</span>
+                            <input asp-for="RentalAmount" type="number" step="0.01" class="form-control" placeholder="4500.00" />
+                        </div>
+                        <span asp-validation-for="RentalAmount" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <!-- Lease Start -->
+                        <div class="col-md-6">
+                            <label asp-for="LeaseStart" class="form-label fw-semibold text-secondary small"></label>
+                            <input asp-for="LeaseStart" type="date" class="form-control" />
+                            <span asp-validation-for="LeaseStart" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Lease End -->
+                        <div class="col-md-6">
+                            <label asp-for="LeaseEnd" class="form-label fw-semibold text-secondary small"></label>
+                            <input asp-for="LeaseEnd" type="date" class="form-control" />
+                            <span asp-validation-for="LeaseEnd" class="text-danger small mt-1 d-block"></span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" asp-for="Status" value="active" />
+
+                    <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary px-4" 
+                                disabled="@(!Model.AvailableStudents.Any() || !Model.AvailableRooms.Any())">
+                            <i class="bi bi-check-lg me-1"></i> Save Tenant Lease
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

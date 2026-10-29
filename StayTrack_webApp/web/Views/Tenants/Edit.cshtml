@@ -1,0 +1,130 @@
+@model StayTrack.Models.ViewModels.TenantFormViewModel
+@{
+    ViewData["Title"] = "Edit Tenant Lease";
+}
+
+<div class="row justify-content-center py-3">
+    <div class="col-lg-8">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <a asp-action="Index" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-1 mb-1">
+                    <i class="bi bi-arrow-left"></i> Back to Tenants
+                </a>
+                <h2 class="fw-bold mb-0 text-dark">Edit Tenant Lease</h2>
+            </div>
+            <span class="badge bg-secondary-subtle text-secondary border px-3 py-2 rounded-pill fs-6">
+                <i class="bi bi-pencil-square me-1"></i> Lease #@Model.TenantId
+            </span>
+        </div>
+
+        <!-- Student Info Banner (Read-only) -->
+        <div class="card card-custom p-3 mb-4 bg-light">
+            <div class="d-flex align-items-center gap-3">
+                <div class="bg-primary text-white rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                    <i class="bi bi-person-fill fs-4"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold text-dark mb-0">@(Model.ExistingStudentName ?? "Student Resident")</h5>
+                    <div class="text-muted small">
+                        @(Model.ExistingStudentEmail ?? "student@accommodation.ac.za") &bull; User ID: <span class="font-monospace">@Model.UserId</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-custom p-4 shadow-sm">
+            <div class="card-body p-0">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small" role="alert"></div>
+
+                <form asp-action="Edit" asp-route-id="@Model.TenantId" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="TenantId" />
+                    <input type="hidden" asp-for="UserId" />
+                    <input type="hidden" asp-for="ExistingStudentName" />
+                    <input type="hidden" asp-for="ExistingStudentEmail" />
+
+                    <!-- Room Selection -->
+                    <div class="mb-3">
+                        <label asp-for="RoomId" class="form-label fw-semibold text-secondary small"></label>
+                        <select asp-for="RoomId" class="form-select @(ViewData.ModelState["RoomId"]?.Errors.Count > 0 ? "is-invalid" : "")">
+                            @foreach (var room in Model.AvailableRooms)
+                            {
+                                <option value="@room.RoomId" selected="@(room.RoomId == Model.RoomId)">
+                                    @(room.Property?.Name ?? "Property") - Room @room.RoomNumber (@room.RoomType) [@room.Status.ToUpper()]
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="RoomId" class="text-danger small mt-1 d-block"></span>
+                        <div class="form-text small">Reassigning a room automatically updates room occupancy states.</div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <!-- Student Number -->
+                        <div class="col-md-6">
+                            <label asp-for="StudentNumber" class="form-label fw-semibold text-secondary small"></label>
+                            <input asp-for="StudentNumber" class="form-control" />
+                            <span asp-validation-for="StudentNumber" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Payment Reference -->
+                        <div class="col-md-6">
+                            <label asp-for="PaymentReference" class="form-label fw-semibold text-secondary small"></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light font-monospace small">#</span>
+                                <input asp-for="PaymentReference" class="form-control font-monospace" />
+                            </div>
+                            <span asp-validation-for="PaymentReference" class="text-danger small mt-1 d-block"></span>
+                        </div>
+                    </div>
+
+                    <!-- Rental Amount -->
+                    <div class="mb-3">
+                        <label asp-for="RentalAmount" class="form-label fw-semibold text-secondary small"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">R</span>
+                            <input asp-for="RentalAmount" type="number" step="0.01" class="form-control" />
+                        </div>
+                        <span asp-validation-for="RentalAmount" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <!-- Lease Start -->
+                        <div class="col-md-6">
+                            <label asp-for="LeaseStart" class="form-label fw-semibold text-secondary small"></label>
+                            <input asp-for="LeaseStart" type="date" class="form-control" />
+                            <span asp-validation-for="LeaseStart" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Lease End -->
+                        <div class="col-md-6">
+                            <label asp-for="LeaseEnd" class="form-label fw-semibold text-secondary small"></label>
+                            <input asp-for="LeaseEnd" type="date" class="form-control" />
+                            <span asp-validation-for="LeaseEnd" class="text-danger small mt-1 d-block"></span>
+                        </div>
+                    </div>
+
+                    <!-- Lease Status -->
+                    <div class="mb-4">
+                        <label asp-for="Status" class="form-label fw-semibold text-secondary small"></label>
+                        <select asp-for="Status" class="form-select">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-save me-1"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
