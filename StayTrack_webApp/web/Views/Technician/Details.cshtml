@@ -1,0 +1,123 @@
+@model StayTrack.Models.ViewModels.TechnicianRequestDetailViewModel
+@{
+    ViewData["Title"] = $"Task #{Model.Request.RequestId} - {Model.Request.Title}";
+    var req = Model.Request;
+}
+
+<div class="row justify-content-center py-3">
+    <div class="col-lg-10">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <a asp-action="Index" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-1 mb-1">
+                    <i class="bi bi-arrow-left"></i> Back to My Tasks
+                </a>
+                <h2 class="fw-bold mb-0 text-dark">@req.Title</h2>
+            </div>
+            <div>
+                @if (req.Status == "completed")
+                {
+                    <span class="badge-status badge-completed fs-6 px-3 py-2">
+                        <i class="bi bi-check2-all me-1"></i> Completed
+                    </span>
+                }
+                else
+                {
+                    <span class="badge-status badge-assigned fs-6 px-3 py-2">
+                        <i class="bi bi-tools me-1"></i> Assigned
+                    </span>
+                }
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Task Overview & Completion Action -->
+            <div class="col-lg-6">
+                <div class="card card-custom p-4 mb-3">
+                    <h6 class="text-secondary small fw-semibold text-uppercase mb-3">Task Overview</h6>
+                    
+                    <div class="mb-3">
+                        <span class="text-muted small d-block">Submitted:</span>
+                        <div class="fw-medium text-dark">
+                            <i class="bi bi-calendar-event me-1 text-muted"></i>
+                            @req.DateSubmitted.ToString("MMMM dd, yyyy HH:mm")
+                        </div>
+                    </div>
+
+                    @if (req.DateCompleted.HasValue)
+                    {
+                        <div class="alert alert-success small p-3 rounded-3 mb-3 border-success-subtle">
+                            <i class="bi bi-check-circle-fill me-1"></i>
+                            <strong>Resolved:</strong> Completed on @req.DateCompleted.Value.ToString("MMMM dd, yyyy HH:mm")
+                        </div>
+                    }
+
+                    <div class="mb-2">
+                        <span class="text-muted small d-block mb-1">Issue Description:</span>
+                        <div class="p-3 bg-light rounded-3 text-dark small" style="white-space: pre-wrap;">@req.Description</div>
+                    </div>
+                </div>
+
+                <!-- Mark as Completed Action -->
+                @if (req.Status != "completed")
+                {
+                    <div class="card card-custom p-4 border-primary-subtle">
+                        <h6 class="text-secondary small fw-semibold text-uppercase mb-2">Resolution Action</h6>
+                        <p class="text-muted small mb-3">
+                            When you have finished repairing the reported issue, click below to update the status to Completed.
+                        </p>
+                        <form asp-action="Complete" asp-route-id="@req.RequestId" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-success btn-lg w-100 py-2 d-flex align-items-center justify-content-center gap-2 shadow-sm"
+                                    onclick="return confirm('Confirm that this maintenance issue has been resolved and completed?');">
+                                <i class="bi bi-check2-circle fs-5"></i>
+                                <span>Mark as Completed</span>
+                            </button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-light border p-3 text-center text-muted small">
+                        <i class="bi bi-check-all text-success fs-4 d-block mb-1"></i>
+                        This task has already been resolved and closed.
+                    </div>
+                }
+            </div>
+
+            <!-- Right Column: Photo Viewer -->
+            <div class="col-lg-6">
+                <div class="card card-custom h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="text-secondary small fw-semibold text-uppercase mb-0">Attached Photo</h6>
+                        @if (Model.HasPhoto)
+                        {
+                            <a href="@Model.SignedPhotoUrl" target="_blank" rel="noopener noreferrer" 
+                               class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-1">
+                                <i class="bi bi-box-arrow-up-right"></i> Open Full View
+                            </a>
+                        }
+                    </div>
+
+                    @if (!Model.HasPhoto)
+                    {
+                        <div class="empty-state my-auto">
+                            <div class="empty-state-icon">
+                                <i class="bi bi-camera-slash"></i>
+                            </div>
+                            <h5 class="fw-bold">No Photo Provided</h5>
+                            <p class="text-muted small mb-0">No photo was attached when this ticket was submitted.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="border rounded-3 p-2 bg-light text-center h-100 d-flex flex-column justify-content-center overflow-auto">
+                            <img src="@Model.SignedPhotoUrl" alt="Maintenance Issue Photo" 
+                                 class="img-fluid rounded shadow-sm mx-auto" 
+                                 style="max-height: 550px; object-fit: contain;" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
