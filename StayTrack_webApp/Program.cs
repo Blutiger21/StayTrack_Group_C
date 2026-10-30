@@ -7,6 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Configure Razor View Engine to locate views in /web/Views as well as /Views
+builder.Services.Configure<Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions>(options =>
+{
+    options.ViewLocationFormats.Insert(0, "/web/Views/{1}/{0}.cshtml");
+    options.ViewLocationFormats.Insert(1, "/web/Views/Shared/{0}.cshtml");
+});
+
 // Bind Supabase configuration settings
 builder.Services.Configure<SupabaseOptions>(builder.Configuration.GetSection(SupabaseOptions.SectionName));
 
