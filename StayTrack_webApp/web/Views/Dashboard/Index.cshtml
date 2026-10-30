@@ -1,0 +1,354 @@
+@model StayTrack.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Operations Dashboard";
+    var currentMonthName = DateTime.Today.ToString("MMMM yyyy");
+}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Operations Dashboard</h2>
+        <p class="text-muted mb-0">Overview for <strong>@DateTime.Today.ToString("dddd, MMMM dd, yyyy")</strong> &bull; StayTrack Management</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a asp-controller="Payments" asp-action="Record" class="btn btn-outline-success btn-sm d-inline-flex align-items-center gap-1 shadow-sm">
+            <i class="bi bi-credit-card"></i> Record Payment
+        </a>
+        <a asp-controller="Tenants" asp-action="Create" class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-1 shadow-sm">
+            <i class="bi bi-person-plus"></i> Add Tenant
+        </a>
+        <a asp-controller="Announcements" asp-action="Index" class="btn btn-primary btn-sm d-inline-flex align-items-center gap-1 shadow-sm">
+            <i class="bi bi-megaphone"></i> Post Notice
+        </a>
+    </div>
+</div>
+
+<!-- 4 Key Metric Cards with Direct Page Links -->
+<div class="row g-3 mb-4">
+    <!-- Pending Payments -->
+    <div class="col-sm-6 col-xl-3">
+        <a asp-controller="Payments" asp-action="Index" asp-route-tab="pending" class="text-decoration-none">
+            <div class="card card-custom p-3 border-start border-4 border-warning h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small fw-semibold text-uppercase">Pending Payments</div>
+                        <h2 class="fw-bold mb-0 text-dark">@Model.PendingPaymentsCount</h2>
+                    </div>
+                    <div class="bg-warning-subtle text-warning p-2 rounded-3">
+                        <i class="bi bi-hourglass-split fs-3"></i>
+                    </div>
+                </div>
+                <div class="mt-2 small text-muted d-flex align-items-center gap-1">
+                    <span>Awaiting receipt verification</span>
+                    <i class="bi bi-arrow-right ms-auto"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Unpaid Tenants for Current Month -->
+    <div class="col-sm-6 col-xl-3">
+        <a asp-controller="Reports" asp-action="Monthly" class="text-decoration-none">
+            <div class="card card-custom p-3 border-start border-4 border-danger h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small fw-semibold text-uppercase">Unpaid Tenants</div>
+                        <h2 class="fw-bold mb-0 text-danger">@Model.UnpaidTenantsCount</h2>
+                    </div>
+                    <div class="bg-danger-subtle text-danger p-2 rounded-3">
+                        <i class="bi bi-exclamation-octagon fs-3"></i>
+                    </div>
+                </div>
+                <div class="mt-2 small text-muted d-flex align-items-center gap-1">
+                    <span>Current month (@DateTime.Today.ToString("MMM"))</span>
+                    <i class="bi bi-arrow-right ms-auto"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Outstanding Repairs -->
+    <div class="col-sm-6 col-xl-3">
+        <a asp-controller="Maintenance" asp-action="Index" class="text-decoration-none">
+            <div class="card card-custom p-3 border-start border-4 border-info h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small fw-semibold text-uppercase">Open Repairs</div>
+                        <h2 class="fw-bold mb-0 text-dark">@Model.OutstandingRequestsCount</h2>
+                    </div>
+                    <div class="bg-info-subtle text-info p-2 rounded-3">
+                        <i class="bi bi-tools fs-3"></i>
+                    </div>
+                </div>
+                <div class="mt-2 small text-muted d-flex align-items-center gap-1">
+                    <span>Pending or in-progress</span>
+                    <i class="bi bi-arrow-right ms-auto"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Active Tenants -->
+    <div class="col-sm-6 col-xl-3">
+        <a asp-controller="Tenants" asp-action="Index" class="text-decoration-none">
+            <div class="card card-custom p-3 border-start border-4 border-success h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small fw-semibold text-uppercase">Active Leases</div>
+                        <h2 class="fw-bold mb-0 text-dark">@Model.ActiveTenantsCount</h2>
+                    </div>
+                    <div class="bg-success-subtle text-success p-2 rounded-3">
+                        <i class="bi bi-people-fill fs-3"></i>
+                    </div>
+                </div>
+                <div class="mt-2 small text-muted d-flex align-items-center gap-1">
+                    <span>Collected: R @Model.MonthlyCollectedRent.ToString("N0")</span>
+                    <i class="bi bi-arrow-right ms-auto"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Latest Announcement Highlight Banner -->
+<div class="card card-custom p-3 mb-4 bg-light border-primary-subtle shadow-sm">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+        <div class="d-flex align-items-start gap-3">
+            <div class="bg-primary text-white p-2 rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                <i class="bi bi-megaphone-fill fs-5"></i>
+            </div>
+            <div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-primary">Latest Announcement</span>
+                    <span class="text-muted small">
+                        @(Model.LatestAnnouncement != null ? Model.LatestAnnouncement.CreatedAt.ToString("MMM dd, yyyy HH:mm") : "None posted yet")
+                    </span>
+                </div>
+                @if (Model.LatestAnnouncement != null)
+                {
+                    <h6 class="fw-bold text-dark mt-1 mb-1">@Model.LatestAnnouncement.Title</h6>
+                    <div class="text-secondary small text-truncate" style="max-width: 700px;">
+                        @Model.LatestAnnouncement.Message
+                    </div>
+                }
+                else
+                {
+                    <div class="text-muted small mt-1">No broadcast announcements have been posted yet.</div>
+                }
+            </div>
+        </div>
+        <a asp-controller="Announcements" asp-action="Index" class="btn btn-outline-primary btn-sm text-nowrap ms-md-auto">
+            Manage Announcements &rarr;
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Short List 1: Payments Pending Verification -->
+    <div class="col-lg-6">
+        <div class="card card-custom h-100 shadow-sm">
+            <div class="card-header-clean d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-dark d-flex align-items-center gap-2">
+                    <i class="bi bi-hourglass-split text-warning"></i>
+                    <span>Payments Pending Verification</span>
+                </span>
+                <a asp-controller="Payments" asp-action="Index" asp-route-tab="pending" class="small text-decoration-none">
+                    View All (@Model.PendingPaymentsCount) &rarr;
+                </a>
+            </div>
+            <div class="card-body p-0">
+                @if (!Model.PendingPayments.Any())
+                {
+                    <div class="p-4 text-center text-muted small">
+                        <i class="bi bi-check-circle text-success fs-3 d-block mb-1"></i>
+                        No pending payments requiring verification!
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 small">
+                            <thead class="table-light text-muted">
+                                <tr>
+                                    <th class="ps-3">Tenant</th>
+                                    <th>Amount</th>
+                                    <th>Month</th>
+                                    <th class="text-end pe-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var pay in Model.PendingPayments)
+                                {
+                                    <tr>
+                                        <td class="ps-3">
+                                            <div class="fw-semibold text-dark">
+                                                @(pay.Tenant?.Profile?.FullName ?? "Tenant #" + pay.TenantId)
+                                            </div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">
+                                                Ref: <span class="font-monospace">@pay.Reference</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong class="text-dark font-monospace">R @pay.Amount.ToString("N2")</strong>
+                                        </td>
+                                        <td>@pay.PeriodMonth.ToString("MMM yyyy")</td>
+                                        <td class="text-end pe-3">
+                                            <a asp-controller="Payments" asp-action="Details" asp-route-id="@pay.PaymentId" 
+                                               class="btn btn-outline-primary btn-sm py-0 px-2" style="font-size: 0.75rem;">
+                                                Verify
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Short List 2: Active Tenants Unpaid for Current Month -->
+    <div class="col-lg-6">
+        <div class="card card-custom h-100 shadow-sm">
+            <div class="card-header-clean d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-dark d-flex align-items-center gap-2">
+                    <i class="bi bi-exclamation-octagon text-danger"></i>
+                    <span>Unpaid Tenants (@DateTime.Today.ToString("MMMM"))</span>
+                </span>
+                <a asp-controller="Reports" asp-action="Monthly" class="small text-decoration-none">
+                    View Monthly Report &rarr;
+                </a>
+            </div>
+            <div class="card-body p-0">
+                @if (!Model.UnpaidTenants.Any())
+                {
+                    <div class="p-4 text-center text-muted small">
+                        <i class="bi bi-check-circle text-success fs-3 d-block mb-1"></i>
+                        All active tenants are fully paid for @DateTime.Today.ToString("MMMM")!
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 small">
+                            <thead class="table-light text-muted">
+                                <tr>
+                                    <th class="ps-3">Student</th>
+                                    <th>Room</th>
+                                    <th>Monthly Rent</th>
+                                    <th class="text-end pe-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var unpaid in Model.UnpaidTenants)
+                                {
+                                    <tr>
+                                        <td class="ps-3">
+                                            <div class="fw-semibold text-dark">@unpaid.StudentName</div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">
+                                                Ref: <span class="font-monospace">@unpaid.PaymentReference</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>@unpaid.PropertyName</div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">Room @unpaid.RoomNumber</div>
+                                        </td>
+                                        <td>
+                                            <span class="text-danger fw-semibold font-monospace">R @unpaid.RentalAmount.ToString("N2")</span>
+                                        </td>
+                                        <td class="text-end pe-3">
+                                            <a asp-controller="Payments" asp-action="Record" asp-route-reference="@unpaid.PaymentReference" 
+                                               class="btn btn-outline-success btn-sm py-0 px-2" style="font-size: 0.75rem;">
+                                                Pay
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Short List 3: Outstanding Maintenance Requests -->
+    <div class="col-12">
+        <div class="card card-custom shadow-sm">
+            <div class="card-header-clean d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-dark d-flex align-items-center gap-2">
+                    <i class="bi bi-tools text-info"></i>
+                    <span>Outstanding Maintenance Requests (Open Tickets)</span>
+                </span>
+                <a asp-controller="Maintenance" asp-action="Index" class="small text-decoration-none">
+                    View All Maintenance (@Model.OutstandingRequestsCount) &rarr;
+                </a>
+            </div>
+            <div class="card-body p-0">
+                @if (!Model.OutstandingRequests.Any())
+                {
+                    <div class="p-4 text-center text-muted small">
+                        <i class="bi bi-emoji-smile text-success fs-3 d-block mb-1"></i>
+                        No outstanding maintenance requests. All reported repairs are resolved!
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 small">
+                            <thead class="table-light text-muted">
+                                <tr>
+                                    <th class="ps-3">Issue Title</th>
+                                    <th>Tenant &amp; Location</th>
+                                    <th>Date Submitted</th>
+                                    <th>Status</th>
+                                    <th>Assigned Technician</th>
+                                    <th class="text-end pe-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var req in Model.OutstandingRequests)
+                                {
+                                    <tr>
+                                        <td class="ps-3">
+                                            <div class="fw-semibold text-dark">@req.Title</div>
+                                            <div class="text-muted text-truncate" style="max-width: 300px; font-size: 0.75rem;">
+                                                @req.Description
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>@(req.Tenant?.Profile?.FullName ?? "Tenant #" + req.TenantId)</div>
+                                            <div class="text-muted" style="font-size: 0.75rem;">
+                                                Room @(req.Tenant?.Room?.RoomNumber ?? "-") &bull; @(req.Tenant?.Room?.Property?.Name ?? "-")
+                                            </div>
+                                        </td>
+                                        <td>@req.DateSubmitted.ToString("MMM dd, yyyy")</td>
+                                        <td>
+                                            @if (req.Status == "assigned")
+                                            {
+                                                <span class="badge-status badge-assigned">Assigned</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge-status badge-pending">Pending</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @(req.Technician?.Profile?.FullName ?? "Unassigned")
+                                        </td>
+                                        <td class="text-end pe-3">
+                                            <a asp-controller="Maintenance" asp-action="Details" asp-route-id="@req.RequestId" 
+                                               class="btn btn-outline-primary btn-sm py-0 px-2" style="font-size: 0.75rem;">
+                                                Manage
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

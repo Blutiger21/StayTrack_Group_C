@@ -1,0 +1,69 @@
+@model StayTrack.Models.ViewModels.VerifyOtpViewModel
+@{
+    ViewData["Title"] = "Enter Verification Code";
+}
+
+<div class="row justify-content-center py-5">
+    <div class="col-md-7 col-lg-5">
+        <div class="card card-custom shadow-sm p-3 p-md-4">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <span class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-2 mb-2" style="width: 48px; height: 48px;">
+                        <i class="bi bi-key-fill fs-4"></i>
+                    </span>
+                    <h3 class="fw-bold text-dark mb-1">Enter Security Code</h3>
+                    <p class="text-muted small mb-1">
+                        We sent a verification passcode to:
+                    </p>
+                    <div class="badge bg-light text-dark border px-3 py-2 fs-6 fw-normal font-monospace">
+                        @Model.Email
+                    </div>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small" role="alert"></div>
+
+                <form asp-action="VerifyOtp" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="Email" />
+                    <input type="hidden" asp-for="ReturnUrl" />
+
+                    <div class="mb-3">
+                        <label asp-for="Token" class="form-label fw-semibold text-secondary small"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted border-end-0">
+                                <i class="bi bi-shield-check"></i>
+                            </span>
+                            <input asp-for="Token" class="form-control text-center font-monospace fs-4 tracking-widest border-start-0" 
+                                   placeholder="123456" maxlength="10" autocomplete="one-time-code" autofocus />
+                        </div>
+                        <span asp-validation-for="Token" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                        <i class="bi bi-check2-circle fs-5"></i>
+                        <span>Verify &amp; Sign In</span>
+                    </button>
+                </form>
+
+                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top small">
+                    <a asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none text-muted">
+                        <i class="bi bi-arrow-left me-1"></i> Use different email
+                    </a>
+
+                    <form asp-action="SendOtp" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="Email" value="@Model.Email" />
+                        <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+                        <button type="submit" class="btn btn-link p-0 text-decoration-none small text-primary">
+                            <i class="bi bi-arrow-repeat me-1"></i> Resend code
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,96 @@
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="row justify-content-center py-4">
+    <div class="col-lg-10">
+        <!-- Hero Section -->
+        <div class="card card-custom border-0 shadow-sm overflow-hidden mb-4 bg-white">
+            <div class="card-body p-4 p-md-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 bg-primary-subtle text-primary border border-primary-subtle rounded-pill mb-3">
+                            <i class="bi bi-shield-lock-fill"></i>
+                            <span class="small fw-semibold">Staff &amp; Technician Portal</span>
+                        </div>
+                        <h1 class="display-6 fw-bold text-dark mb-3">
+                            StayTrack Student Accommodation
+                        </h1>
+                        <p class="lead text-muted mb-4">
+                            Centralized operational system for student housing management and maintenance. Secured via Supabase Row-Level Security and role-based access control.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg px-4 d-inline-flex align-items-center gap-2">
+                                <i class="bi bi-box-arrow-in-right"></i>
+                                <span>Sign In with Email OTP</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-block text-center">
+                        <div class="p-4 bg-light rounded-4 border">
+                            <i class="bi bi-building-check text-primary" style="font-size: 5rem;"></i>
+                            <div class="mt-2 fw-semibold text-secondary">Operational Portal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student App Notice -->
+        <div class="alert alert-info border-info-subtle d-flex align-items-start gap-3 p-3 rounded-3 mb-4 shadow-sm" role="alert">
+            <i class="bi bi-info-circle-fill text-info fs-4 flex-shrink-0"></i>
+            <div>
+                <strong class="d-block mb-1">Are you a student resident?</strong>
+                <span class="text-secondary">
+                    This web application is reserved for accommodation <strong>management</strong> and <strong>maintenance technicians</strong>. Students should use the <strong>StayTrack Flutter mobile app</strong> to view rooms, upload proof of payment, and submit maintenance tickets.
+                </span>
+            </div>
+        </div>
+
+        <!-- System Modules Overview -->
+        <h4 class="fw-bold text-dark mb-3">System Capabilities</h4>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card card-custom h-100 p-3">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <div class="bg-primary-subtle text-primary p-2 rounded-3">
+                            <i class="bi bi-people-fill fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Tenant Records</h5>
+                    </div>
+                    <p class="text-muted small mb-0">
+                        Assign student profiles to rooms, issue unique payment references, manage lease periods, and track occupancy.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-custom h-100 p-3">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <div class="bg-success-subtle text-success p-2 rounded-3">
+                            <i class="bi bi-credit-card-2-front-fill fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Payment Verification</h5>
+                    </div>
+                    <p class="text-muted small mb-0">
+                        Inspect student payment receipts, verify with signed URLs, approve or reject submissions, and record manual payments.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-custom h-100 p-3">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <div class="bg-warning-subtle text-warning p-2 rounded-3">
+                            <i class="bi bi-tools fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Maintenance Workflow</h5>
+                    </div>
+                    <p class="text-muted small mb-0">
+                        Assign submitted tickets to technicians, track repairs, view damage photos, and allow technicians to mark work complete.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
